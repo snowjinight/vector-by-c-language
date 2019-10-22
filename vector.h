@@ -1,21 +1,22 @@
 #pragma once
-#define rank unsigned int 
+#define rank int 
 #define T int
 typedef struct VECTOR
 {
-	T* _elem;
+	T *_elem;
 	rank _size;
 	rank _capacity;
 
-	rank (*_check)(struct VECTOR* p, T val); //查找元素，返回位置
-	void (*_rmelem)(struct VECTOR* p, rank lo, rank hi); //删除任意区间元素
+	int (*_check)(struct VECTOR* p, T val); //查找元素，返回位置
+	int (*_rmelem)(struct VECTOR* p, rank lo, rank hi); //删除任意区间元素
 	void (*_display)(struct VECTOR* p); //打印向量
-	rank(*_insert)(struct VECTOR* p, rank r, T val); //任意位置插入
+	int (*_insert)(struct VECTOR* p, rank r, T val); //任意位置插入
 	int (*_empty_init)(struct VECTOR* p, rank cap);//空初始化
 	void (*_deconstruct)(struct VECTOR* p); //析构
-	int (*_copyform_init)(struct VECTOR* p, T* const A, rank lo, rank hi); //拷贝初始化
+	int (*_copyform_init)(struct VECTOR* p, T* const A, rank lo, rank hi, const int lenA); //区间拷贝初始化
 	void (*_expand)(struct VECTOR* p); //动态扩容
 	void (*_insert_tail)(struct VECTOR* p, T val); //尾插
+	int (*_rm_single)(struct VECTOR* p, rank r);//单个元素删除
 
 }vector, * p_vector;
 
