@@ -1,13 +1,11 @@
-﻿// paratest.cpp : 此文件包含 "main" 函数。程序执行将在此处开始并结束。
-//
-
+﻿
 #include <stdio.h>
 #include <stdlib.h>
 #include "vector.h"
 
 
 
-int vec_init(struct VECTOR* p, unsigned int cap)
+int vec_init(struct VECTOR* p, rank cap)
 {
 	p->_elem = (int*)malloc(sizeof(int) * cap);
 	if (p->_elem == NULL)
@@ -18,12 +16,15 @@ int vec_init(struct VECTOR* p, unsigned int cap)
 	p->_size = 0;
 	p->_capacity = cap;
 	return 0;
-
 }
 
-int copyform_init(struct VECTOR* p, int* const A, rank lo, rank hi)
+int copyform_init(struct VECTOR* p, T* const A, rank lo, rank hi)
 {
 	p->_elem = (int*)malloc(sizeof(int) * (p->_capacity = 2 * (hi - lo)));
+	if (p->_elem == NULL)
+	{
+		return -1;
+	}
 	p->_size = 0;
 	while (lo < hi)
 	{
@@ -54,21 +55,18 @@ rank insert(struct VECTOR *p, rank r, T val)
 	p->_elem[r] = val; p->_size++;
 	return r;
 }
-int check(struct VECTOR *p, int val)
+rank check(struct VECTOR *p, T val)
 {
 	int lo = 0, hi = p->_size;
 	while ((hi-- > lo) && (val != p->_elem[hi]))      ;
 	return hi;
-
 }
 
-int rmelem(struct VECTOR *p, rank lo, rank hi)
+void rmelem(struct VECTOR *p, rank lo, rank hi)
 {
 	while (hi < p->_size) p->_elem[lo++] = p->_elem[hi++];
 	p->_size = lo;
-
-	
-	return 0;
+	return;
 }
 
 void display (struct VECTOR *p)
@@ -82,14 +80,11 @@ void display (struct VECTOR *p)
 
 }
 
-
-
 void deconstruct(struct VECTOR *p)
 {
 	free((void*)p->_elem);
 	return;
 }
-
 
 
 void insert_tail(struct VECTOR* p, T val)
@@ -98,13 +93,16 @@ void insert_tail(struct VECTOR* p, T val)
 	p->_elem[p->_size++] = val;
 }
 
-void init(struct VECTOR* p)
+void construct(struct VECTOR* p)
 {
+		p->_elem = NULL;
+		p->_capacity = 0;
+		p->_size = 0;
 		p->_check = check;
 		p->_rmelem = rmelem;
 		p->_display = display;
 		p->_insert = insert;
-		p->_vec_init = vec_init;
+		p->_empty_init = vec_init;
 		p->_deconstruct = deconstruct;
 		p->_copyform_init = copyform_init;
 		p->_expand = expand;

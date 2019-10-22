@@ -6,10 +6,9 @@
 
 int main()
 {
-	vector_pa vec;
+	vector vec;
 	p_vector p_vec = &vec;
-	
-	init(p_vec);//接口函数初始化
+	construct(p_vec);//构造函数初始化
 
 	int arr_t[] = { 9,5,4,66,2,3,4,5,77,8,888,7675,4432,45,32,5,66,4234 };
 
@@ -35,11 +34,13 @@ int main()
 
 	vec._deconstruct(p_vec);
 
-	vector_pa vec1;
-	p_vector p_vec1 = &vec1;
-	init(p_vec1);//接口函数初始化
 
-	vec1._vec_init(p_vec1, 1);
+	//测试向量2，另一种初始化
+	vector vec1;
+	p_vector p_vec1 = &vec1;
+	construct(p_vec1);//构造函数初始化
+
+	vec1._empty_init(p_vec1, 1);
 	vec1._insert_tail(p_vec1, 333);
 	vec1._insert_tail(p_vec1, 3333);
 	vec1._insert_tail(p_vec1, 33333);
